@@ -76,7 +76,11 @@ export default function MobileMenu() {
                         Home
                       </Link>
                     </li>
-
+                    <li className='py-2 text-lg text-black transition-colors hover:text-neutral-500 dark:text-white'>
+                      <Link to='/' className={window.location.pathname === '/' ? 'mobileMenudActive' : ''}>
+                        About us
+                      </Link>
+                    </li>
                 </ul>
               </div>
             </Dialog.Panel>

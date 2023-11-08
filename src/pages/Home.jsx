@@ -8,6 +8,8 @@ const Home = () => {
               <Layout>
 
               <h3 className="text-red-500">This is home page</h3>
+
+              
               
               </Layout>
         </>

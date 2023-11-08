@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 import MobileMenu from './MobileMenu';
+import CartIcon from '../assets/images/icons/icon-cart.svg'
 
 const Navbar = () => {
     return (
@@ -23,6 +24,17 @@ const Navbar = () => {
                         <Search />
                     </div>
                     <div className="flex justify-end md:w-1/3">
+                        <Link to={''} className='mx-4 hover:underline relative'>
+                            <img src={CartIcon} className='' title='Cart' alt='Cart icon' width={30} />
+                            <span className='bg-black text-white rounded-[50%] text-center text-xs absolute right-[-18%] top-[-22%] w-4 h-4'>0</span>
+                        </Link>
+                        <Link
+                            to={'/blogs'}
+                            className="text-neutral-500 underline-offset-4 mx-4 hover:text-black hover:underline"
+                        // onClick={(e) => { e.preventDefault(); setLoginOpen('overlay open'); }}
+                        >
+                            Blogs
+                        </Link>
                         <Link
                             to={''}
                             className="text-neutral-500 underline-offset-4 hover:text-black hover:underline"
