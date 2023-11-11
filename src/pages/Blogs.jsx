@@ -9,7 +9,7 @@ const Blogs = () => {
 
     useEffect(() => {
 
-        axios.get('https://uol-v-2.hostprohub.com/api/blogs')
+        axios.get('blogs')
             .then(response => {
                 console.log(response.data);
                 setBlogs(response.data);

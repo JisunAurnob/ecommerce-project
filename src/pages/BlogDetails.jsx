@@ -15,7 +15,7 @@ const BlogDetails = () => {
 
     useEffect(() => {
 
-        axios.get('https://uol-v-2.hostprohub.com/api/blog/' + slug)
+        axios.get('blog/' + slug)
             .then(response => {
                 console.log(response);
                 if (response.data.success) {

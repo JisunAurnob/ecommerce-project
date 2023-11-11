@@ -4,8 +4,10 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Blogs from './pages/Blogs';
 import BlogDetails from './pages/BlogDetails';
+import axios from 'axios';
 
 function App() {
+  axios.defaults.baseURL="https://uol-v-2.hostprohub.com/api/";
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
