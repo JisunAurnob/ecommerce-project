@@ -1,0 +1,10 @@
+.product_details ul, li {
+    list-style: revert;
+    margin: revert;
+    padding: revert;
+  }
+
+  .product_details h1,h2,h3{
+    font-size: revert;
+    font-weight: revert;
+  }

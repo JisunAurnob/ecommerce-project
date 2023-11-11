@@ -4,7 +4,8 @@ import Search from './Search';
 import MobileMenu from './MobileMenu';
 import CartIcon from '../assets/images/icons/icon-cart.svg'
 
-const Navbar = () => {
+const Navbar = (props) => {
+    console.log(props.headerData);
     return (
         <>
             <nav className="sticky top-0 z-40 w-full backdrop-blur flex items-center justify-between p-4 lg:px-6 border-b border-gray-200">
@@ -14,7 +15,7 @@ const Navbar = () => {
                 <div className="flex w-full items-center">
                     <div className="flex w-full md:w-1/3">
                         <Link to="/" className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
-                            <img src={''} className='' width={40} />
+                            <img src={props.headerData?.site_logo} className='' width={40} />
                             <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
                                 Ecommerce
                             </div>
