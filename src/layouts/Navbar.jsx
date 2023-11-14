@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Search from './Search';
 import MobileMenu from './MobileMenu';
 import CartIcon from '../assets/images/icons/icon-cart.svg'
+import { SettingsContext } from '../components/SettingsProvider';
 
-const Navbar = (props) => {
-    console.log(props.headerData);
+const Navbar = () => {
+    // console.log(props.headerData);
+    const settingsDataFromContext = useContext(SettingsContext);
+
+    // console.log(settingsDataFromContext);
     return (
         <>
             <nav className="sticky top-0 z-40 w-full backdrop-blur flex items-center justify-between p-4 lg:px-6 border-b border-gray-200">
@@ -15,7 +19,7 @@ const Navbar = (props) => {
                 <div className="flex w-full items-center">
                     <div className="flex w-full md:w-1/3">
                         <Link to="/" className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6">
-                            <img src={props.headerData?.site_logo} className='' width={40} />
+                            <img src={settingsDataFromContext?.headerManagement?.site_logo} className='' width={40} />
                             <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
                                 Ecommerce
                             </div>
@@ -54,6 +58,11 @@ const Navbar = (props) => {
                     </div>
                 </div>
             </nav>
+            
+            <div className='sticky top-16 z-40 w-100 bg-black text-white p-2 flex justify-between'>
+                    <span>Call Us {settingsDataFromContext?.headerManagement?.hotline_no}</span>
+                    <span>{settingsDataFromContext?.headerManagement?.hotline_description_bottom}</span>
+                </div>
         </>
     );
 }

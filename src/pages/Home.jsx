@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../layouts/Layout";
 import axios from "axios";
 import Slider from "react-slick";
+import { SettingsContext } from "../components/SettingsProvider";
 
 const Home = () => {
-    const [settings, setSettings] = useState();
+    const settingsDataFromContext = useContext(SettingsContext);
 
-    useEffect(() => {
+    // console.log(settingsDataFromContext);
 
-        axios.get('settings?platform=web')
-            .then(response => {
-                // console.log(response.data);
-                setSettings(response.data);
-            })
-
-    }, [])
     // console.log(settings);
     var slickSettings = {
         dots: true,
@@ -102,7 +96,7 @@ const Home = () => {
                 </div> */}
 
                 <Slider {...slickSettings}>
-                    {settings?.hompageBanner.map((banner, index) => {
+                    {settingsDataFromContext?.hompageBanner.map((banner, index) => {
                         return (
                             <div>
                                 <img src={banner.banner_image} className="h-[300px] w-[100%]" />
@@ -113,7 +107,7 @@ const Home = () => {
                 <br/>
                 <br/>
                 <Slider {...slickCategorySettings}>
-                    {settings?.categories.map((category, index) => {
+                    {settingsDataFromContext?.categories.map((category, index) => {
                         return (
                             <div>
                                 <div className="p-10 border mx-4 flex items-center justify-center">
