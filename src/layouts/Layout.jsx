@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
         <div>
                 <Navbar />
 
-                <div className='min-h-[75vh] bg-slate-100'>
+                <div className='min-h-[75vh] bg-slate-100 w-[75%] mx-auto'>
                 {children}
                 </div>
 

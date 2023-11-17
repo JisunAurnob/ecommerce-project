@@ -3,11 +3,12 @@ import Layout from "../layouts/Layout";
 import axios from "axios";
 import Slider from "react-slick";
 import { SettingsContext } from "../components/SettingsProvider";
+import ProductCard from "../components/ProductCard";
 
 const Home = () => {
     const settingsDataFromContext = useContext(SettingsContext);
 
-    // console.log(settingsDataFromContext);
+    console.log(settingsDataFromContext);
 
     // console.log(settings);
     var slickSettings = {
@@ -25,23 +26,23 @@ const Home = () => {
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: false,
-    autoplaySpeed: 2700,
-    responsive: [
-        {
-          breakpoint: 769,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-      ],
+        autoplaySpeed: 2700,
+        responsive: [
+            {
+                breakpoint: 769,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
     };
     return (
         <>
@@ -104,22 +105,38 @@ const Home = () => {
                         )
                     })}
                 </Slider>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <Slider {...slickCategorySettings}>
                     {settingsDataFromContext?.categories.map((category, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <div className="p-10 border mx-4 flex items-center justify-center">
-                                <div className="text-center">
-                                <img src={category.image} className="w-[80px] h-[80px]" />
-                                <span>{category.name}</span>
+                                    <div className="text-center">
+                                        <img src={category.image} className="w-[80px] h-[80px]" />
+                                        <span>{category.name}</span>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         )
                     })}
                 </Slider>
+
+                <br />
+
+                <div className="p-2 my-6">
+                    <h2 className="font-bold text-2xl">Popular Products</h2>
+                    <div className="grid grid-cols-4 gap-4">
+                        {settingsDataFromContext?.popular?.data.map((product, index) => {
+                            return (
+                                <div key={index} className="col-span-1">
+                                    <ProductCard product={product} />
+                                </div>
+                            )
+                        })}
+                    </div>
+
+                </div>
 
             </Layout>
         </>
