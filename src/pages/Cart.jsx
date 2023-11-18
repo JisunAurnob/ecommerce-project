@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useCart } from "react-use-cart";
+import { toast } from "react-toastify";
+import Toaster from "../components/common/Toaster";
 
 const Cart = () => {
     const { items, cartTotal, removeItem, updateItemQuantity  } = useCart();
@@ -64,10 +66,13 @@ const Cart = () => {
                             </div>
                             </td>
                             <td className="whitespace-nowrap py-4  text-sm font-medium text-gray-900 sm:pl-0 text-left">
-                            {Number(product.quantity) * Number(product.price)}
+                            {(Number(product.quantity) * Number(product.price)).toFixed(2)}
                             </td>
                             <td className="whitespace-nowrap py-4  text-sm font-medium text-gray-900 sm:pl-0 text-left">
-                            <button className="bg-red-500 text-black p-2" onClick={()=>removeItem(product?.id)}>
+                            <button className="bg-red-500 text-black p-2" onClick={()=>{
+                              removeItem(product?.id);
+                              Toaster("Product removed from cart", 'error')
+                                }}>
                                 Delete
                             </button>
                             </td>
@@ -77,7 +82,7 @@ const Cart = () => {
               </tbody>
             </table>
             <div className="w-100 text-end">
-                <p className="w-auto text-2xl text-slte-600 m-4">Total Price: {cartTotal}</p>
+                <p className="w-auto text-2xl text-slte-600 m-4">Total Price: {cartTotal.toFixed(2)}</p>
             </div>
               </div>
 

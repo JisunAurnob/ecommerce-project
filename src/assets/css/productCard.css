@@ -1,0 +1,49 @@
+.product-badge {
+    background-color: black;
+    color: white;
+    width: 5rem;
+    position: absolute;
+    right: 0;
+    top: 9px;
+    text-align: center;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    z-index: 2;
+}
+.discounted-price .discounted {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #368436;
+}
+.discounted-price .regular {
+    text-decoration: line-through;
+    padding-left: 0.5rem;
+    font-size: 0.75rem;
+    color: gray;
+    font-weight: 500;
+}
+.regular-price{
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #368436;
+}
+
+.stock-badge {
+    background-color: rgb(153, 0, 0);
+    color: white;
+    width: 7rem;
+    position: absolute;
+    right: 0;
+    top: 9px;
+    text-align: center;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    z-index: 2;
+}
+.product-card{
+    overflow: hidden;
+}
+.product-card:hover img{
+    transition: all 1.2s ease-out;
+    transform: scale(1.1);
+}
