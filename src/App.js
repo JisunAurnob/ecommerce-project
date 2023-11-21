@@ -10,6 +10,7 @@ import { CartProvider } from 'react-use-cart';
 import Cart from './pages/Cart';
 import { ToastContainer } from 'react-toastify';
 import ProductDetails from './pages/ProductDetails';
+import CheckOut from './pages/CheckOut';
 
 function App() {
   axios.defaults.baseURL="https://uol-v-2.hostprohub.com/api/";
@@ -24,6 +25,7 @@ function App() {
       <Route exact path="/blog/:slug" element={<BlogDetails />} />
       <Route exact path="/cart" element={<Cart />} />
       <Route exact path="/product/:slug" element={<ProductDetails />} />
+      <Route exact path="/checkout" element={<CheckOut />} />
     </Routes>
     </SettingsProvider>
     </CartProvider>

@@ -48,10 +48,11 @@ console.log(product);
                         addItem({
                             id: product?.id,
                             name: product?.name,
+                            slug: product?.slug,
                             price: product?.final_product_price,
                             image: product?.image?.small,
                             stock: product?.stock
-                        }, 20);
+                        });
                        Toaster('Product added to cart', 'success');
                     }
                     else{

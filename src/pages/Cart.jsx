@@ -48,7 +48,7 @@ const Cart = () => {
                             <img src={product.image} width={80} height={80} />
                             </td>
                             <td className="whitespace-nowrap py-4  text-sm font-medium text-gray-900 sm:pl-0 text-left">
-                            {product.name}
+                            <Link to={`/product/${product.slug}`}>{product.name}</Link>
                             </td>
                             <td className="whitespace-nowrap py-4  text-sm font-medium text-gray-900 sm:pl-0 text-left">
                             {product.price}
@@ -60,7 +60,15 @@ const Cart = () => {
                                     -
                                 </button>
                                 {product.quantity}
-                                <button className="bg-slate-500 text-2xl text-white p-2 w-8 rounded-lg" onClick={()=>updateItemQuantity(product.id, (product.quantity+1))}>
+                                <button className="bg-slate-500 text-2xl text-white p-2 w-8 rounded-lg" onClick={()=>{ 
+                                  if(product.stock>product.quantity){
+
+                                    updateItemQuantity(product.id, (product.quantity+1))
+                                  }
+                                  else{
+                                    Toaster('No more stocks available!', 'warn')
+                                  }
+                                  }}>
                                     +
                                 </button>
                             </div>
@@ -83,6 +91,10 @@ const Cart = () => {
             </table>
             <div className="w-100 text-end">
                 <p className="w-auto text-2xl text-slte-600 m-4">Total Price: {cartTotal.toFixed(2)}</p>
+                <br/>
+                <br />
+
+                <Link to={'/checkout'} className=" w-48 p-4 bg-slate-700 text-cyan-400 rounded-lg hover:bg-slate-500">Checkout</Link>
             </div>
               </div>
 
