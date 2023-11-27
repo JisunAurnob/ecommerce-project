@@ -47,6 +47,7 @@ console.log(product);
                     if(Number(product?.stock)>0){
                         addItem({
                             id: product?.id,
+                            product_id: product?.id,
                             name: product?.name,
                             slug: product?.slug,
                             price: product?.final_product_price,

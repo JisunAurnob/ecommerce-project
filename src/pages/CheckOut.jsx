@@ -3,10 +3,14 @@ import Layout from "../layouts/Layout";
 import axios from "axios";
 import { useCart } from "react-use-cart";
 import { SettingsContext } from "../components/SettingsProvider";
+import Toaster from "../components/common/Toaster";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = () => {
+    const navigate = useNavigate();
+
     const settingsDataFromContext = useContext(SettingsContext);
-    const {items, cartTotal} = useCart();
+    const {items, cartTotal, emptyCart} = useCart();
     const [customerName, setCustomerName] = useState();
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -42,6 +46,64 @@ const CheckOut = () => {
                 })
         }
     }, [city])
+
+    let cartProducts = [];
+
+    items.forEach(function (item) {
+        // console.log("listcart theke id"+item.id);
+        cartProducts.push({
+          id: item.id,
+          product_id: item.product_id,
+          product_name: item.name,
+          product_price: Number(item.price).toFixed(2),
+          qty: item.quantity
+        });
+      });
+
+    const checkoutOrder = (e) => {
+        e.preventDefault();
+        let orderData = {
+            shipping_details: {
+                customer_name: customerName,
+                customer_email: email,
+                customer_phone: phone,
+                customer_address: address,
+                customer_city: city,
+                customer_zip: zip,
+                shipping_area: area
+            },
+            products: cartProducts,
+            order_note: orderNote,
+            payment_method: "cod",
+            shipping_cost: shippingCharge,
+            vat: "0.00",
+            coupon_id: null,
+            order_from: "online",
+            pointApply: false,
+            pointEnableTotalPrice: 0
+        }
+
+        axios.post('order', orderData)
+            .then(function(response) {
+                // console.log(response.data);
+                if(response?.data?.success==false){
+                    Toaster('Something went wrong! Please try again', 'error');
+                    console.log(response?.data?.message);
+                }
+                if(response?.data?.success){
+                    Toaster('Order completed successfully', ' success');
+                    emptyCart();
+
+                    navigate("/", {replace: true})
+
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // console.log(orderData);
+    }
     return (
         <>
             <Layout>
@@ -54,7 +116,7 @@ const CheckOut = () => {
                     <div className="w-[50%] bg-slate-300 rounded-xl">
 
                         <form method="POST" className="flex items-center justify-center my-4" 
-                        // onSubmit={(e) => submitForm(e)}
+                        onSubmit={(e) => checkoutOrder(e)}
                         >
 
                             <div>

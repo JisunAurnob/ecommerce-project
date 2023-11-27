@@ -8,6 +8,8 @@ import '../assets/css/blogDetails.css'
 const ProductDetails = () => {
 
     const [productDetails, setProductDetails] = useState();
+    const [productPrice, setProductPrice] = useState(0);
+    const [attributeId, setAttributeId] = useState();
 
     const { slug } = useParams();
 
@@ -18,9 +20,11 @@ const ProductDetails = () => {
         axios.get('get-product/' + slug)
             .then(response => {
                 console.log(response);
-                if (response.data.success) {
+                if (response?.data?.success) {
 
-                    setProductDetails(response.data.data);
+                    setProductDetails(response?.data?.data);
+
+                    setProductPrice(response?.data?.data?.final_product_price)
                 }
             })
 
@@ -37,9 +41,20 @@ const ProductDetails = () => {
                         <img src={productDetails?.image?.large} className="" />
                     </div>
 
-                    <div>
+                    <div className="p-4">
                         <h1 className=" font-bold text-2xl">{productDetails?.name}</h1>
-                        <p className=""> {productDetails?.formatted_final_product_price} </p>
+                        <p className="text-2xl pt-2"> ৳{productPrice} </p>
+                        <br />
+
+                        <div className="attribute_section">
+                            {productDetails?.attributes.map((attribute,index)=>{
+                                return(
+                                    <button key={index} className={`p-4 rounded-lg mr-4 ${(attributeId==attribute?.id) ? 'bg-green-600 text-white' : 'bg-green-200'}`} onClick={()=>{
+                                        setProductPrice(attribute.attribute_final_price);
+                                        setAttributeId(attribute?.id)}}>{attribute?.attribute_value}</button>
+                                );
+                            })}
+                        </div>
                     </div>
 
                 </div>
