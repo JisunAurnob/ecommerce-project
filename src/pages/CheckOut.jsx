@@ -91,7 +91,7 @@ const CheckOut = () => {
                     console.log(response?.data?.message);
                 }
                 if(response?.data?.success){
-                    Toaster('Order completed successfully', ' success');
+                    Toaster('Order completed successfully', 'success');
                     emptyCart();
 
                     navigate("/", {replace: true})
@@ -104,6 +104,8 @@ const CheckOut = () => {
 
         // console.log(orderData);
     }
+
+    // console.log(settingsDataFromContext?.shipping_charges[1]);
     return (
         <>
             <Layout>
@@ -143,6 +145,7 @@ const CheckOut = () => {
                                 </select>
                                 <br />
                                 <select className="border-4 mb-4" name="area" value={area} onChange={(e)=> setArea(e.target.value)}>
+                                    <option>Select Area</option>
                                     {city=='inside_dhaka' && (
                                        insideDhakaAreas && insideDhakaAreas.map((zone, index)=>{
                                         return <option key={index} value={zone.name}>{zone.name}</option>

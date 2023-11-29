@@ -52,7 +52,7 @@ const Navbar = () => {
                         </Link>
                         /
                         <Link
-                            to={''}
+                            to={'/sign-up'}
                             className="text-neutral-500 underline-offset-4 hover:text-black hover:underline"
                         // onClick={(e) => { e.preventDefault(); setLoginOpen('overlay open'); }}
                         >
