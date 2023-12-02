@@ -19,6 +19,10 @@ const SettingsProvider = ({ children }) => {
 
     }, [])
 
+    // const updateData = newData => {
+    //     setSettingsData(newData);
+    //   };
+
     return(
         <SettingsContext.Provider value={settingsData}>
             {children}

@@ -12,6 +12,8 @@ import { ToastContainer } from 'react-toastify';
 import ProductDetails from './pages/ProductDetails';
 import CheckOut from './pages/CheckOut';
 import Registration from './pages/Registration';
+import Login from './pages/Login';
+import UserProvider from './components/UserProvider';
 
 function App() {
   axios.defaults.baseURL="https://uol-v-2.hostprohub.com/api/";
@@ -20,6 +22,7 @@ function App() {
     <ToastContainer />
     <CartProvider>
     <SettingsProvider>
+      <UserProvider>
     <Routes>
       <Route exact path="/" element={<Home />} />
       <Route exact path="/blogs" element={<Blogs />} />
@@ -29,7 +32,10 @@ function App() {
       <Route exact path="/checkout" element={<CheckOut />} />
       
       <Route exact path="/sign-up" element={<Registration />} />
+
+      <Route exact path="/login" element={<Login />} />
     </Routes>
+      </UserProvider>
     </SettingsProvider>
     </CartProvider>
     </>

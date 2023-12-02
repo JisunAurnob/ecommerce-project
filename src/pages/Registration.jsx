@@ -13,6 +13,7 @@ const Registration = () => {
     const [email, setEmail] = useState('');
     const [dob, setDob] = useState('');
     const [gender, setGender] = useState('');
+    let [errorList, setErrorList] = useState([]);
 
     const [isPasswordMatched, setIsPasswordMatched] = useState(0);
 
@@ -27,8 +28,24 @@ const Registration = () => {
 
     }, [confirmPassword])
 
+const [nameError, setNameError] = useState('');
+
     const signUp = (e) => {
         e.preventDefault();
+
+        let isValidated = true;
+
+        if(name.length<3){
+            isValidated=false;
+                setNameError('Name required from frontend')
+            // console.log('ksjsdkj');
+        }
+        else{
+            setNameError('')
+        }
+
+        if(isValidated){
+            
         var signUpData = {
             customer_name: name,
             customer_password: password,
@@ -44,15 +61,20 @@ const Registration = () => {
             console.log(response);
             if (response?.data?.success_message) {
                 Toaster('Registration Successful', 'success');
-                navigate('/', {replace:true});
+                navigate('/login', {replace:true});
             }
             else{
-                Toaster("Something went wrong", 'error')
+                Toaster("Something went wrong", 'error');
+                setErrorList(response.data.message);
             }
         })
         .catch(error =>{
             console.log(error);
         })
+        }
+        else{
+            Toaster('Please fill up the form with correct data', 'warn')
+        }
     }
 
     return (
@@ -64,21 +86,25 @@ const Registration = () => {
                         <form method="post" onSubmit={(e) => signUp(e)}>
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)}
-                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                                 <label for="name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Enter your name</label>
+                                {errorList && <span className=" text-red-600">{errorList?.customer_name}</span>}
+                                {nameError && <span className=" text-red-600">{nameError}</span>}
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="text" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)}
-                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
                                 <label for="phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Enter your phone number</label>
+                                    {errorList && <span className=" text-red-600">{errorList?.customer_contact}</span>}
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label for="password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Enter your password</label>
+                                    {errorList && <span className=" text-red-600">{errorList?.customer_password}</span>}
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <input type="password" name="password_confirm" id="password_confirm" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
@@ -87,6 +113,8 @@ const Registration = () => {
                                     Confirm your password</label>
                                     {isPasswordMatched==1 && <span className=" text-red-600">Password not matched</span>}
                                     {isPasswordMatched==2 && <span className=" text-green-600">Password matched</span>}
+
+                                    {errorList && <span className=" text-red-600">{errorList?.customer_password_confirmation}</span>}
                             </div>
 
                             <div class="relative z-0 w-full mb-6 group">
@@ -94,6 +122,7 @@ const Registration = () => {
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label for="email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Enter your email address</label>
+                                    {errorList && <span className=" text-red-600">{errorList?.customer_email}</span>}
                             </div>
 
                             <div class="relative z-0 w-full mb-6 group">
@@ -101,6 +130,7 @@ const Registration = () => {
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                                 <label for="dob" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                                     Enter your birth date</label>
+                                    {errorList && <span className=" text-red-600">{errorList?.customer_dob}</span>}
                             </div>
 
                             <div class="relative z-0 w-full mb-6 group">
@@ -120,6 +150,8 @@ const Registration = () => {
                                     <input id="other" type="radio" value={"other"} name="default-radio" onChange={(e) => setGender(e.target.value)} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                     <label for="other" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Other</label>
                                 </div>
+
+                                {errorList && <span className=" text-red-600">{errorList?.customer_gender}</span>}
                             </div>
 
 

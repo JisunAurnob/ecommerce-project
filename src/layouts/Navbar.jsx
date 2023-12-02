@@ -5,12 +5,23 @@ import MobileMenu from './MobileMenu';
 import CartIcon from '../assets/images/icons/icon-cart.svg'
 import { SettingsContext } from '../components/SettingsProvider';
 import { useCart } from 'react-use-cart';
+import { UserContext } from '../components/UserProvider';
+import Toaster from '../components/common/Toaster';
 
 const Navbar = () => {
     // console.log(props.headerData);
     const settingsDataFromContext = useContext(SettingsContext);
 
+    const { userData, updateUserData } = useContext(UserContext);
+
     const { totalUniqueItems } = useCart();
+
+    const logOut = () =>{
+        localStorage.removeItem("user");
+        updateUserData(null);
+        Toaster('successfully logged out', 'success');
+        // window.location.reload();
+    }
 
     // console.log(settingsDataFromContext);
     return (
@@ -43,8 +54,16 @@ const Navbar = () => {
                         >
                             Blogs
                         </Link>
-                        <Link
-                            to={''}
+                        {userData ? (
+                            <>
+                            <h3>{userData?.name}</h3>
+                            <button className='' onClick={logOut}>Logout</button>
+                            </>
+                        ) :
+                        (
+                            <>
+                            <Link
+                            to={'/login'}
                             className="text-neutral-500 underline-offset-4 hover:text-black hover:underline"
                         // onClick={(e) => { e.preventDefault(); setLoginOpen('overlay open'); }}
                         >
@@ -58,6 +77,8 @@ const Navbar = () => {
                         >
                             Signup
                         </Link>
+                        </>
+                        )}
                     </div>
                 </div>
             </nav>
