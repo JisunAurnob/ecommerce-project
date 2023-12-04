@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Search from './Search';
 import MobileMenu from './MobileMenu';
 import CartIcon from '../assets/images/icons/icon-cart.svg'
@@ -7,20 +7,38 @@ import { SettingsContext } from '../components/SettingsProvider';
 import { useCart } from 'react-use-cart';
 import { UserContext } from '../components/UserProvider';
 import Toaster from '../components/common/Toaster';
+import axios from 'axios';
+// import logOut from '../components/common/Logout';
 
 const Navbar = () => {
     // console.log(props.headerData);
+    const navigate = useNavigate();
+
     const settingsDataFromContext = useContext(SettingsContext);
 
     const { userData, updateUserData } = useContext(UserContext);
 
     const { totalUniqueItems } = useCart();
 
-    const logOut = () =>{
-        localStorage.removeItem("user");
-        updateUserData(null);
-        Toaster('successfully logged out', 'success');
-        // window.location.reload();
+    const logOut = () => {
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userData?.token}`;
+
+        axios.post("customer/logout")
+            .then(function (resp) {
+                if (resp.data.success) {
+
+                    Toaster('Successfully logged out', 'success');
+                    localStorage.removeItem("user");
+                    updateUserData(null);
+
+                    navigate("/", { replace: true });
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
     }
 
     // console.log(settingsDataFromContext);
@@ -56,37 +74,33 @@ const Navbar = () => {
                         </Link>
                         {userData ? (
                             <>
-                            <h3>{userData?.name}</h3>
-                            <button className='' onClick={logOut}>Logout</button>
+                                <h3>{userData?.name}</h3>
+                                <button className='' onClick={logOut}>Logout</button>
                             </>
                         ) :
-                        (
-                            <>
-                            <Link
-                            to={'/login'}
-                            className="text-neutral-500 underline-offset-4 hover:text-black hover:underline"
-                        // onClick={(e) => { e.preventDefault(); setLoginOpen('overlay open'); }}
-                        >
-                            Login
-                        </Link>
-                        /
-                        <Link
-                            to={'/sign-up'}
-                            className="text-neutral-500 underline-offset-4 hover:text-black hover:underline"
-                        // onClick={(e) => { e.preventDefault(); setLoginOpen('overlay open'); }}
-                        >
-                            Signup
-                        </Link>
-                        </>
-                        )}
+                            (
+                                <>
+                                    <Link
+                                        to={'/login'}
+                                        className="text-neutral-500 underline-offset-4 hover:text-black hover:underline">
+                                        Login
+                                    </Link>
+                                    /
+                                    <Link
+                                        to={'/sign-up'}
+                                        className="text-neutral-500 underline-offset-4 hover:text-black hover:underline">
+                                        Signup
+                                    </Link>
+                                </>
+                            )}
                     </div>
                 </div>
             </nav>
-            
+
             <div className=' w-100 bg-black text-white p-2 flex justify-between'>
-                    <span>Call Us {settingsDataFromContext?.headerManagement?.hotline_no}</span>
-                    <span>{settingsDataFromContext?.headerManagement?.hotline_description_bottom}</span>
-                </div>
+                <span>Call Us {settingsDataFromContext?.headerManagement?.hotline_no}</span>
+                <span>{settingsDataFromContext?.headerManagement?.hotline_description_bottom}</span>
+            </div>
         </>
     );
 }
