@@ -17,8 +17,8 @@ const UserProvider = ({ children }) => {
 
     }, [])
 
-    const updateUserData = newData => {
-        setUserData(newData);
+    const updateUserData = (a) => {
+        setUserData(a);
       };
 
     return(

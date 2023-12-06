@@ -39,7 +39,7 @@ const Login = () => {
 
               Toaster('Loggedin Successfully', 'success')
 
-              navigate('/', {replace: true});
+              navigate('/user/dashboard', {replace: true});
 
             //   window.location.href='/'
 

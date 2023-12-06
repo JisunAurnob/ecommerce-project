@@ -74,7 +74,7 @@ const Navbar = () => {
                         </Link>
                         {userData ? (
                             <>
-                                <h3>{userData?.name}</h3>
+                                <Link to={`/user/dashboard`} className='hover:underline'><h3>{userData?.name}</h3></Link>
                                 <button className='' onClick={logOut}>Logout</button>
                             </>
                         ) :
