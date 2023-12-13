@@ -8,6 +8,7 @@ import axios from "axios";
 
 const AddAddress = () => {
 
+    const navigate = useNavigate();
     const { userData } = useContext(UserContext);
     const [errorList, setError] = useState();
     let [username, setUsername] = useState("");
@@ -79,6 +80,7 @@ const AddAddress = () => {
                     }
                     else if (data.message) {
                         Toaster(data.message, 'success');
+                        navigate('/user/addresses', {replace:true})
                     }
                     if (resp.data.code === 401 || resp.data.message === "Authorization token invalid, You cannot proceed") {
                         Toaster(resp.data.message, 'error')
