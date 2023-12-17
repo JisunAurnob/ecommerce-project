@@ -18,6 +18,8 @@ import Dashboard from './pages/user/Dashboard';
 import Profile from './pages/user/Profile';
 import AddressBook from './pages/user/AddressBook';
 import AddAddress from './pages/user/AddAddress';
+import OrderList from './pages/user/OrderList';
+import OrderDetails from './pages/user/OrderDetails';
 
 function App() {
   axios.defaults.baseURL="https://uol-v-2.hostprohub.com/api/";
@@ -43,6 +45,8 @@ function App() {
       <Route exact path="/user/profile" element={<Profile />} />
       <Route exact path="/user/addresses" element={<AddressBook />} />
       <Route exact path="/user/add-address" element={<AddAddress />} />
+      <Route exact path="/user/order-list" element={<OrderList />} />
+      <Route exact path="/user/order/order-details/:id" element={<OrderDetails />} />
     </Routes>
       </UserProvider>
     </SettingsProvider>
