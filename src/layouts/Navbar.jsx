@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Search from './Search';
 import MobileMenu from './MobileMenu';
@@ -42,6 +42,8 @@ const Navbar = () => {
     }
 
     // console.log(settingsDataFromContext);
+
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     return (
         <>
             <nav className="sticky top-0 z-40 w-full backdrop-blur flex items-center justify-between p-4 lg:px-6 border-b border-gray-200">
@@ -54,6 +56,18 @@ const Navbar = () => {
                             <img src={settingsDataFromContext?.headerManagement?.site_logo} className='' width={40} />
                             <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
                                 Ecommerce
+                            </div>
+                        </Link>
+
+                        <Link to="/" className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6 relative">
+                            <button className="bg-blue-300 px-4 py-2 md:hidden lg:block" onClick={()=>{setIsCategoryOpen(!isCategoryOpen)}}>
+                                Browse Categories
+                            </button>
+
+                            <div className={`grid grid-cols-2 p-2 bg-slate-300 absolute top-[2.6rem] ${isCategoryOpen ? '' : 'hidden'}`}>
+                                <div className='bg-yellow-200 mx-1'>Category 1</div>
+                                <div className='bg-yellow-200 mx-1'>Category 2</div>
+                                <div className='bg-yellow-200 mx-1'>Category 3</div>
                             </div>
                         </Link>
                     </div>
